@@ -1,0 +1,48 @@
+<!DOCTYPE html><!-- cuenta del usuario -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página de Cuenta</title>
+  <link rel="stylesheet" href="accountStyle.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <button class="homeButton" id="homeButton">🏠</button>
+      <h1 class="title">Cuenta</h1>
+      <input type="search" placeholder="Buscar" class="searchInput">
+    </header>
+
+    <!-- User Info -->
+    <div class="userInfo">
+      <div class="avatar">ISW</div>
+      <div class="userDetails">
+        <p id="userName" >*Nombre de usuario </p>
+        <p id="userEmail"  >*Correo </p>
+      </div>
+      <div class="userActions">
+        <button class="editProfileButton">Modificar cuenta</button>
+        <button id="logoutBtn"  class="logoutButton">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tabButton activeTabButton" id="publicacionesTab">Publicaciones</button>
+      <button class="tabButton" id="favoritosTab">Favoritos</button>
+    </div>
+
+    <div class="favorites-section">
+      <h2>Favoritos</h2>
+      <div id="favorites-list"></div>
+    </div>    
+
+    <!-- Scrollable Content -->
+    <div class="scrollableContainer" id="contentContainer"></div>
+  </div>
+
+  <script src="account.js"></script>
+</body>
+</html>

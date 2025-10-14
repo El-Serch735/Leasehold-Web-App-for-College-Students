@@ -1,0 +1,395 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+  }
+
+  /* Botón de Publicar */
+#publishButton {
+  background-color: #28a745; /* Verde */
+  color: white; /* Texto blanco */
+  border: none; /* Sin bordes */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px 15px; /* Espaciado interno */
+  font-size: 14px; /* Tamaño de letra */
+  cursor: pointer; /* Manito al pasar */
+  transition: background-color 0.3s, transform 0.2s; /* Transiciones suaves */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Efecto hover para el botón */
+#publishButton:hover {
+  background-color: #218838; /* Verde más oscuro */
+  transform: scale(1.05); /* Ligera ampliación */
+}
+
+/* Efecto activo (al presionar el botón) */
+#publishButton:active {
+  background-color: #1e7e34; /* Verde aún más oscuro */
+  transform: scale(0.95); /* Ligera contracción */
+}
+
+
+  /* Estilos para el botón de Mi Cuenta */
+  .account-button {
+    background-color: #28a745; /* Verde */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .account-button:hover {
+    background-color: #45a049;
+  }
+
+  /* Contenedor del formulario */
+.add-comment-form {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espaciado entre los elementos */
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9; /* Fondo claro */
+  border: 1px solid #ddd; /* Borde gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Campo de entrada */
+.add-comment-form #comment-input {
+  flex: 1; /* Ocupa el espacio disponible */
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc; /* Borde gris */
+  border-radius: 5px;
+  outline: none; /* Quita el borde azul de enfoque predeterminado */
+  transition: border-color 0.3s;
+}
+
+/* Cambio de color al enfocar */
+.add-comment-form #comment-input:focus {
+  border-color: #007bff; /* Azul intenso */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efecto de luz */
+}
+
+/* Botón de envío */
+.add-comment-form button {
+  background-color: #007bff; /* Azul */
+  color: white; /* Texto blanco */
+  border: none; /* Sin bordes */
+  border-radius: 5px;
+  padding: 6px 12px; /* Reduce el padding */
+  font-size: 12px; /* Disminuye el tamaño de fuente */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); /* Sombra ligeramente más pequeña */
+}
+
+/* Hover: cuando el mouse está encima */
+.add-comment-form button:hover {
+  background-color: #0056b3; /* Azul más oscuro */
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+
+/* Activo: cuando el botón está siendo presionado */
+.add-comment-form button:active {
+  background-color: #004085; /* Azul aún más oscuro */
+  transform: scale(0.95); /* Reduce ligeramente el tamaño */
+}
+
+/* Desactivado: para botones no disponibles */
+.add-comment-form button:disabled {
+  background-color: #cccccc; /* Gris claro */
+  color: #666666; /* Gris oscuro */
+  cursor: not-allowed; /* Cursor prohibido */
+  box-shadow: none; /* Sin sombra */
+}
+
+
+
+/* Contenedor principal de la lista de comentarios */
+#commentList {
+  list-style-type: none; /* Elimina los marcadores predeterminados */
+  padding: 0;
+  margin: 20px 0;
+}
+
+/* Elementos de la lista de comentarios */
+#commentList li {
+  background-color: #f9f9f9; /* Fondo claro para el comentario */
+  border: 1px solid #ddd; /* Borde sutil */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 10px 15px; /* Espaciado interno */
+  margin-bottom: 10px; /* Espaciado entre comentarios */
+  font-size: 14px; /* Tamaño de letra */
+  color: #333; /* Color del texto */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+/* Hover en los comentarios */
+#commentList li:hover {
+  background-color: #eef; /* Fondo más claro al pasar el mouse */
+  transform: scale(1.02); /* Ligero efecto de ampliación */
+}
+
+/* Autor del comentario */
+#commentList li strong {
+  display: block; /* Autor en una línea separada */
+  font-weight: bold;
+  color: #007bff; /* Color azul para el autor */
+  margin-bottom: 5px;
+}
+
+/* Texto del comentario */
+#commentList li span {
+  font-style: italic; /* Texto en cursiva para el comentario */
+  color: #555;
+}
+
+
+
+
+
+
+  /* Estilo general del botón */
+.rent-button {
+  background-color: #28a745; /* Verde agradable */
+  color: white; /* Texto blanco */
+  border: none; /* Sin bordes */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px 20px; /* Espaciado interno */
+  font-size: 16px; /* Tamaño del texto */
+  cursor: pointer; /* Cursor de "mano" */
+  transition: background-color 0.3s, transform 0.2s; /* Animaciones suaves */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Hover: cuando el mouse está encima */
+.rent-button:hover {
+  background-color: #218838; /* Un verde más oscuro */
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+
+/* Activo: cuando el botón está siendo presionado */
+.rent-button:active {
+  background-color: #1e7e34; /* Verde más oscuro aún */
+  transform: scale(0.95); /* Reduce ligeramente el tamaño */
+}
+
+/* Desactivado: para botones no disponibles */
+.rent-button:disabled {
+  background-color: #cccccc; /* Gris claro */
+  color: #666666; /* Gris oscuro */
+  cursor: not-allowed; /* Cursor prohibido */
+  box-shadow: none; /* Sin sombra */
+}
+
+  /* Estilos para el botón de Mi Cuenta */
+.account-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.account-button:hover {
+  background-color: #45a049;
+}
+
+
+  .search-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0; /* Separación superior e inferior */
+    gap: 10px;
+  }
+  
+  .search-input {
+    width: 60%; /* Ancho ajustable */
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px 0 0 8px; /* Bordes redondeados en los extremos izquierdos */
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+  }
+  
+  .search-button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Color azul */
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0; /* Bordes redondeados en los extremos derechos */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-button:hover {
+    background-color: #0056b3; /* Color más oscuro en hover */
+  }
+  
+  /*------------------------------------------------------------*/
+  
+  .filters-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .filter {
+    position: relative;
+  }
+  
+  .filter button {
+    background-color: #f5e9f9;
+    border: 1px solid #d8c7e3;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1000;
+  }
+  
+  .dropdown label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .filter:hover .dropdown {
+    display: block;
+  }
+  
+  .clear-filters-button {
+    background-color: #e4e4e4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  /*------------------------------------------------------------*/
+
+
+
+
+
+
+  img {
+    width: 300px; /* Ancho fijo */
+    height: 200px; /* Altura fija */
+  }
+  
+  .card img { 
+    width: 100px; /* O el tamaño que necesites */
+    height: 100px; /* Altura específica */
+    /*width: 100%;
+    height: auto; /* Mantener proporciones */
+    object-fit: cover; /* Evita que la imagen se distorsione */
+  }
+  
+  h1 {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    margin: 0;
+  }
+  
+  #posts-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping of cards */
+    justify-content: center; /* Center-align the cards */
+    padding: 20px;
+    gap: 20px; /* Space between cards */
+  }
+  
+  /* Card Style */
+  .post {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    width: 100%;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .post:hover {
+    transform: translateY(-10px); /* Slightly raise the card */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .post h2 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .post p {
+    margin: 5px 0;
+  }
+  
+  .author {
+    font-style: italic;
+    color: #777;
+    margin-bottom: 10px;
+  }
+  
+  .address {
+    font-weight: bold;
+    color: #444;
+  }
+  
+  .services {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  .services li {
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
+  .services .available {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .services .unavailable {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .details {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 10px;
+  }

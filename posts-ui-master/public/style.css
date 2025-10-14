@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100svh;
+  font-size: larger;
+}
+
+.form-container {
+  width: 500px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form + p,
+form p {
+  text-align: center;
+}
+
+input,
+button {
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding: 15px 30px;
+}
+
+button {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.password-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+#password,
+#confirmar_password {
+  width: 91.5%;
+  padding: 15px 30px;
+  padding-right: 10px;
+  border: 1px solid #000;
+  border-radius: 11px;
+}
+
+#eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-100%);
+  cursor: pointer;
+}
+
+#eye-icon2 {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+#eye-icon3 {
+  position: absolute;
+  right: 12px;
+  left: 1010px;
+  top: 54.3%;
+  transform: translateY(-100%);
+  cursor: pointer;
+}
+
+.mensaje {
+  font-size: 10px;
+  color: gray;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

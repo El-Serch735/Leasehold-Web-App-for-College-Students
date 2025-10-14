@@ -1,0 +1,121 @@
+.container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .homeButton {
+    font-size: 20px;
+  }
+  
+  .userInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .userDetails p {
+    margin: 0;
+  }
+  
+  .tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .tabButton {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .activeTabButton {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .scrollableContainer {
+    overflow-y: auto;
+    max-height: 400px;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+  }
+  
+  .cardImage {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+  }
+  
+  .cardContent {
+    flex: 1;
+  }
+  
+  .cardActions {
+    display: flex;
+    gap: 10px;
+  }
+  /* Estilo de botones */
+button {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Botón de "Modificar cuenta" */
+.editProfileButton {
+  background-color: #007bff; /* Azul */
+  color: white;
+  margin-right: 10px;
+}
+
+/* Botón de "Cerrar sesión" */
+.logoutButton {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+}
+
+/* Botones de "Editar" y "Borrar" en publicaciones */
+.editButton {
+  background-color: #007bff; /* Azul */
+  color: white;
+  margin-right: 5px;
+}
+
+.deleteButton {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+}
+
+/* Contenedor de botones de usuario (Modificar cuenta y Cerrar sesión) */
+.userActions {
+  display: flex;
+  justify-content: flex-end; /* Alinea los botones a la derecha */
+  margin-top: 10px;
+}
+

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="register.js" defer></script>
+
+    <style>
+        .mensaje {
+            font-size: 13px;  
+            color: gray;      
+        }
+    </style>
+<link rel="stylesheet" href="styles.css">
+</head>
+<main>
+    <div class="form-container">
+       <h1>Crear cuenta</h1>
+       <p>Ingresa tus datos para crear tu cuenta</p>
+       <form id="register-form">
+        <label for="user" class="sr-only">User</label>
+        <input type="text" name="user" id="user" placeholder="Nombre">
+
+        <label for="apellidos" class="sr-only">Apellidos</label>
+        <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos">
+
+        <label for="celular" class="sr-only">Celular</label>
+        <input type="tel" name="celular" id="celular" placeholder="Celular" pattern="[0-9]{10}"> 
+
+        <label for="email" class="sr-only">Email</label>
+        <input type="email" name="email" id="email" placeholder="Correo electrónico">
+
+        <div class="password-container">
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" placeholder="Contraseña" pattern=".{6,20}">
+        <small class="mensaje">Usa de 6 a 20 caracteres</small>
+        <span id="eye-icon" class="eye-icon">👁️</span>
+        </div>
+        
+        <div class="password-container">
+        <label for="confirmar_password" class="sr-only">Confirmar password</label>
+        <input type="password" name="confirmar_password" id="confirmar_password" placeholder="Confirmar contraseña" pattern=".{6,20}">
+        <span id="eye-icon2" class="eye-icon">👁️</span>
+         </div>
+
+        <button type="submit">Registrarme</button>
+       </form>
+
+       <script>
+        // Obtener los campos de contraseña y confirmación, y los iconos
+        const userField = document.getElementById("user");
+        const lastNameField = document.getElementById("apellidos");
+        const celularField = document.getElementById("celular");
+        const emailField = document.getElementById("email");
+        const passwordField = document.getElementById("password");
+        const confirmPasswordField = document.getElementById("confirmar_password");
+        const eyeIcon = document.getElementById("eye-icon");
+        const eyeIcon2 = document.getElementById("eye-icon2");
+
+            // Función para alternar la visibilidad de la contraseña
+        eyeIcon.addEventListener("click", function() {
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.src = "icono-ojo-abierto.png";
+            } else {
+                passwordField.type = "password";
+                eyeIcon.src = "icono-ojo-cerrado.png";
+            }
+        });
+
+        eyeIcon2.addEventListener("click", function() {
+            if (confirmPasswordField.type === "password") {
+                confirmPasswordField.type = "text";
+                eyeIcon2.src = "icono-ojo-abierto.png";
+            } else {
+                confirmPasswordField.type = "password";
+                eyeIcon2.src = "icono-ojo-cerrado.png";
+            }
+        });
+
+            // Función para enviar los datos al backend
+            document.getElementById("register-form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de manera convencional
+
+            const userData = {
+                firstname: userField.value,
+                lastname: lastNameField.value,
+                phone: celularField.value,
+                email: emailField.value,
+                password: passwordField.value
+            };
+
+            try {
+                const response = await fetch("http://localhost:3000/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                const result = await response.json();
+                console.log(response);
+                if (response.status==201) {
+                    console.log("hola");
+                    // Redirigir al usuario a la página principal
+                    window.location.href = "/";
+                }
+            } catch (error) {
+                document.getElementById("result").innerText = "Error en la conexión con el servidor";
+                console.error("Error:", error);
+            }
+        });
+        </script>
+    </div> 
+</main>
+</body>
+</html>

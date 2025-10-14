@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Casas y Departamentos ESIME</title>
+    <link rel="stylesheet" href="/postStyles.css">
+  </head>
+  <body>
+    <h1>Casas y Departamentos ESIME</h1>
+
+    <!-- Barra de búsqueda y filtros -->
+    <div class="search-bar-container">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Buscar publicaciones..."
+        class="search-input"
+      />
+      <button id="searchButton" class="search-button">🔍</button>
+      <!-- Filtros -->
+      <div class="filters-container">
+        <!-- Tipo de inmueble -->
+        <div class="filter">
+          <button id="propertyTypeFilterButton">Inmueble</button>
+          <div class="dropdown" id="propertyTypeDropdown">
+            <label><input type="checkbox" name="propertyType" value="house" /> Casa</label>
+            <label><input type="checkbox" name="propertyType" value="apartment" /> Apartamento</label>
+          </div>
+        </div>
+
+        <!-- Número de recámaras -->
+        <div class="filter">
+          <button id="roomsFilterButton">Recámaras</button>
+          <div class="dropdown" id="roomsDropdown">
+            <label><input type="checkbox" name="rooms" value="1" /> 1 Recámara</label>
+            <label><input type="checkbox" name="rooms" value="2" /> 2 Recámaras</label>
+            <label><input type="checkbox" name="rooms" value="3" /> 3 Recámaras</label>
+          </div>
+        </div>
+
+        <!-- Servicios -->
+        <div class="filter">
+          <button id="servicesFilterButton">Servicios</button>
+          <div class="dropdown" id="servicesDropdown">
+            <label><input type="checkbox" name="services" value="electricity" /> Luz eléctrica</label>
+            <label><input type="checkbox" name="services" value="water" /> Agua</label>
+            <label><input type="checkbox" name="services" value="gas" /> Gas</label>
+            <label><input type="checkbox" name="services" value="internet" /> Internet</label>
+            <label><input type="checkbox" name="services" value="phone" /> Teléfono</label>
+            <label><input type="checkbox" name="services" value="parking" /> Estacionamiento</label>
+          </div>
+        </div>
+
+        <!-- Botón para limpiar filtros -->
+        <button id="clearFiltersButton" class="clear-filters-button">Limpiar Filtros</button>
+      </div>
+    </div>
+
+    <!-- Botón para redirigir a la cuenta del usuario -->
+    <button id="accountButton" class="account-button">Mi Cuenta</button>
+    <!-- Botón para redirigir al formulario de publicaciones -->
+    <button id="publishButton" class="nav-button">Publicar</button>
+    <!-- Contenedor de publicaciones -->
+    <div id="posts-container"></div>
+
+    <!-- JavaScript -->
+    <script>
+      let posts = []
+      function createPostElement(post){
+        const postElement = document.createElement("div");
+          postElement.classList.add("post");
+
+          const titleElement = document.createElement("h2");
+          titleElement.textContent = post.title;
+
+          const authorElement = document.createElement("p");
+          authorElement.textContent = `By: ${post.author}`;
+
+          if (post.photos.length > 0) {
+            const imageElement = document.createElement("img");
+            imageElement.src = post.photos[0];
+            postElement.appendChild(imageElement);
+          }
+
+          const descriptionElement = document.createElement("p");
+          descriptionElement.textContent = post.description;
+
+          const addressElement = document.createElement("p");
+          addressElement.textContent = `Address: ${post.address}`;
+
+          const servicesElement = document.createElement("ul");
+          const services = [
+            { name: "Electric Service", has: post.hasElectricService },
+            { name: "Gas Service", has: post.hasGasService },
+            { name: "Internet Service", has: post.hasInternetService },
+            { name: "Parking", has: post.hasParking },
+            { name: "Phone", has: post.hasPhone },
+            { name: "Water Service", has: post.hasWaterService },
+          ];
+          services.forEach((service) => {
+            const serviceItem = document.createElement("li");
+            serviceItem.textContent = `${service.name}: ${service.has ? "Yes" : "No"}`;
+            servicesElement.appendChild(serviceItem);
+          });
+
+          const typeElement = document.createElement("p");
+          typeElement.textContent = `Type: ${post.isDepartment ? "Apartment" : post.isHouse ? "House" : "Other"}`;
+
+          const detailsElement = document.createElement("p");
+          detailsElement.textContent = `Rooms: ${post.numberOfRooms} | Likes: ${post.likes}`;
+
+          const rentButton = document.createElement('button');
+            rentButton.type = 'click';
+            rentButton.textContent = 'Rentar';
+            rentButton.classList.add('rent-button');
+
+          rentButton.addEventListener("click", async(event)=>{
+            event.preventDefault();
+            const HostId = JSON.parse(window.localStorage.getItem('user')).id
+
+            const data = {
+              hostId:HostId
+            }
+
+            const postId = post._id
+//llamada al back
+            const response = await fetch(`http://localhost:3000/post/${postId}/wasHost`, {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+            });
+            if (response.status == 200){
+              const newPost = await response.json();
+              const toReplaceId = posts.findIndex(post=>post._id==postId)
+              posts[toReplaceId] = newPost
+            }
+            renderPosts()
+        })
+
+          postElement.appendChild(titleElement);
+          postElement.appendChild(authorElement);
+          postElement.appendChild(descriptionElement);
+          postElement.appendChild(addressElement);
+          postElement.appendChild(servicesElement);
+          postElement.appendChild(typeElement);
+          postElement.appendChild(detailsElement);
+          postElement.appendChild(rentButton);
+
+          return postElement  
+      }
+      
+      function createCommentElement(post){
+        const host = JSON.parse(window.localStorage.getItem('user'))
+        // Genera la lista de comentarios
+        const div = document.createElement('div')
+        const list = document.createElement('ul')
+        list.setAttribute('id', 'commentList')
+
+        post.comments.forEach(e => {
+          const liElement = document.createElement('li')
+          liElement.innerText = `${e.author} - ${e.comment}`
+          list.appendChild(liElement)
+        });
+
+        div.appendChild(list)
+
+        const commentForm = document.createElement('form');
+        commentForm.classList.add('add-comment-form');
+        commentForm.id = 'add-comment-form';
+
+        const commentInput = document.createElement('input');
+        commentInput.type = 'text';
+        commentInput.id = 'comment-input';
+        commentInput.placeholder = 'Escribe un comentario...';
+        commentInput.required = true;
+
+        const submitButton = document.createElement('button');
+        submitButton.type = 'submit';
+        submitButton.textContent = 'Add Comment';
+
+        commentForm.appendChild(commentInput);
+        commentForm.appendChild(submitButton);
+
+        commentForm.addEventListener("submit", async(event)=>{
+          event.preventDefault();
+          if (host!=undefined &&  post.hosts.includes(host.id)){
+            const commentText = commentInput.value.trim();
+            const postId = post._id
+            const author = JSON.parse(window.localStorage.getItem('user')).firstname
+            const data = {
+              comment: commentText,
+              author:author
+            }
+            const response = await fetch(`http://localhost:3000/post/${postId}`, {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+            });
+            if(response.status==200){
+                const newPost = await response.json();
+                //clear comment input
+                commentInput.value = ""
+                // replace data
+                const toReplaceId = posts.findIndex(post=>post._id==postId)
+                posts[toReplaceId] = newPost
+                renderPosts()
+            } 
+          }
+        }
+        )
+      
+        div.appendChild(commentForm)
+        return div
+      }
+
+      // Renderizar publicaciones
+      const renderPosts = () => {
+        const postsContainer = document.getElementById("posts-container"); // Contenedor para publicaciones
+        postsContainer.innerHTML = ""
+        if (posts.length === 0) {
+          postsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
+          return;
+        }        
+        posts.forEach(post=>{
+          const postElement = createPostElement(post)
+          const commentElement = createCommentElement(post)
+          postElement.appendChild(commentElement)
+          postsContainer.appendChild(postElement)
+        })
+        
+      };
+
+      // Obtener publicaciones del servidor
+      const fetchPosts = async (query = "") => {
+        try {
+          const response = await fetch(`http://localhost:3000/search?${query}`);
+          if (!response.ok) {
+            throw new Error("Error al obtener publicaciones");
+          }
+          const data = await response.json();
+          posts = data
+          renderPosts();
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      // Filtrar publicaciones
+      const filterPosts = () => {
+        const query = new URLSearchParams();
+        const searchValue = document.getElementById("searchInput").value.trim();
+
+        // Añadir el texto de búsqueda si está presente
+        if (searchValue) {
+          query.append("search", searchValue);
+          query.append("title", searchValue); 
+          query.append("description", searchValue);
+        }
+
+        // Recolectar filtros de "Tipo de inmueble"
+        const propertyTypeCheckboxes = document.querySelectorAll("input[name='propertyType']:checked");
+        propertyTypeCheckboxes.forEach((checkbox) => {
+          if (checkbox.value === "house") query.append("isHouse", true);
+          if (checkbox.value === "apartment") query.append("isDepartment", true);
+        });
+
+        // Recolectar filtros de "Número de recámaras"
+        const roomsCheckboxes = document.querySelectorAll("input[name='rooms']:checked");
+        if (roomsCheckboxes.length > 0) {
+          query.append("numberOfRooms", roomsCheckboxes[0].value); 
+        }
+
+        // Recolectar filtros de "Servicios"
+        const serviceCheckboxes = document.querySelectorAll("input[name='services']:checked");
+        serviceCheckboxes.forEach((checkbox) => {
+          if (checkbox.value === "electricity") query.append("hasElectricService", true);
+          if (checkbox.value === "water") query.append("hasWaterService", true);
+          if (checkbox.value === "gas") query.append("hasGasService", true);
+          if (checkbox.value === "internet") query.append("hasInternetService", true);
+          if (checkbox.value === "phone") query.append("hasPhone", true);
+          if (checkbox.value === "parking") query.append("hasParking", true);
+        });
+
+        // Enviar la query string al backend
+        fetchPosts(query.toString());
+      };
+
+      // Botón para limpiar filtros
+      document.getElementById("clearFiltersButton").addEventListener("click", () => {
+        const checkboxes = document.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = false;
+        });
+
+        document.getElementById("searchInput").value = "";
+        fetchPosts(); // Recargar publicaciones sin filtros
+      });
+
+      // Listeners para el botón de búsqueda
+      document.getElementById("searchButton").addEventListener("click", filterPosts);
+      document.getElementById("searchInput").addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          filterPosts();
+        }
+      });
+
+      // Cargar publicaciones al inicio
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchPosts(); // Sin filtros
+      });
+      // Redirigir a la página de la cuenta del usuario
+      document.getElementById("accountButton").addEventListener("click", () => {
+      
+      const user = window.localStorage.getItem('user')
+      if(!user){
+        window.location.href = '/login'
+      }
+      else{
+        window.location.href = "/account";
+      }
+    });
+
+    document.getElementById('publishButton').addEventListener('click', () => {
+      const user = window.localStorage.getItem('user')
+      if(!user){
+        window.location.href = '/login';
+      }
+      else{
+        window.location.href = '/publish'
+      }
+    });
+    </script>
+  </body>
+</html>

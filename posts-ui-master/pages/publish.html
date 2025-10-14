@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publicación de Propiedad</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .form-row {
+      margin-bottom: 15px;
+    }
+    .form-row label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-row input[type="text"], 
+    .form-row input[type="number"], 
+    .form-row textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-row input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    .submit-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .submit-button:hover {
+      background-color: #45a049;
+    }
+    .back-button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .back-button:hover {
+      background-color: #e41e1e;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+     <button id="backButton" class="back-button">Regresar</button>
+    <h1>Crea tu publicación</h1>
+    <form id="publicationForm">
+      <!-- Título -->
+      <div class="form-row">
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" placeholder="Título de la propiedad">
+      </div>
+      
+      <!-- Dirección -->
+      <div class="form-row">
+        <label for="address">Dirección:</label>
+        <input type="text" id="address" name="address" placeholder="Dirección completa">
+      </div>
+
+      <!-- Autor -->
+      <div class="form-row">
+        <label for="author">Autor:</label>
+        <input type="text" id="author" name="author" placeholder="Nombre del propietario o autor">
+      </div>
+
+      <!-- Número de habitaciones -->
+      <div class="form-row">
+        <label for="numberOfRooms">Número de habitaciones:</label>
+        <input type="number" id="numberOfRooms" name="numberOfRooms" min="0" placeholder="0">
+      </div>
+
+      <!-- Servicios -->
+      <h2>Servicios</h2>
+      <div class="form-row">
+        <label><input type="checkbox" id="isHouse" name="isHouse"> ¿Es una casa?</label>
+        <label><input type="checkbox" id="isDepartment" name="isDepartment"> ¿Es un departamento?</label>
+        <label><input type="checkbox" id="hasWaterService" name="hasWaterService"> Agua</label>
+        <label><input type="checkbox" id="hasGasService" name="hasGasService"> Gas</label>
+        <label><input type="checkbox" id="hasInternetService" name="hasInternetService"> Internet</label>
+        <label><input type="checkbox" id="hasElectricService" name="hasElectricService"> Electricidad</label>
+        <label><input type="checkbox" id="hasPhone" name="hasPhone"> Teléfono</label>
+        <label><input type="checkbox" id="hasParking" name="hasParking"> Estacionamiento</label>
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-row">
+        <label for="description">Descripción:</label>
+        <textarea id="description" name="description" rows="5" placeholder="Descripción del inmueble (máximo 1000 caracteres)" maxlength="1000"></textarea>
+      </div>
+
+      <!-- Botón para enviar -->
+      <button type="submit" class="submit-button">Guardar y publicar</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById('publicationForm');
+      const backButton = document.getElementById('backButton');
+
+      // Objeto de datos por defecto
+      const formData = {
+        title: '',
+        address: '',
+        author: '',
+        likes: 0, // Por defecto
+        description: '',
+        numberOfRooms: 0,
+        isHouse: false,
+        isDepartment: false,
+        hasWaterService: false,
+        hasGasService: false,
+        hasInternetService: false,
+        hasElectricService: false,
+        hasPhone: false,
+        hasParking: false,
+        photos: 0 // Por defecto
+      };
+
+      // Manejar cambios en los campos
+      const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        formData[name] = type === 'checkbox' ? checked : value;
+      };
+
+      // Manejar envío del formulario
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+          const response = await fetch('http://localhost:3000/post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+          });
+
+          if (response.ok) {
+            alert('Publicación guardada exitosamente');
+          } else {
+            throw new Error('Error al guardar la publicación');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Hubo un problema al guardar la publicación');
+        }
+      };
+
+      // Event listeners
+      form.addEventListener('input', handleChange);
+      form.addEventListener('submit', handleSubmit);
+      backButton.addEventListener('click', () => window.history.back());
+      // Redirigir a la página de la cuenta del usuario
+      document.getElementById("accountButton").addEventListener("click", () => {
+      // Asumiendo que la URL de la cuenta del usuario es algo como /account
+      window.location.href = "/account";
+});
+    });
+  </script>
+</body>
+</html>
