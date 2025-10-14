@@ -9,7 +9,7 @@ const app = express()
 const port = 3000
 
 //url para la base de datos
-const connectionURL = "mongodb+srv://sergioflores735:qu97We1xsx7x2RYr@webdatabase.gbq59.mongodb.net/?retryWrites=true&w=majority&appName=WebDataBase"; // Change this based on your database connection
+const connectionURL = "DatabaseConnection"; // Change this based on your database connection
 
 mongoose.connect(connectionURL)
 .then(() => {
